@@ -1,8 +1,6 @@
-FROM docker.io/alpine:3 AS alpine-openrc
+FROM docker.io/alpine:3.24 AS alpine-openrc
 
 RUN apk add --no-cache openrc
-
-RUN sed -i '/getty/d' /etc/inittab
 
 CMD [ "/sbin/init" ]
 
@@ -15,3 +13,6 @@ RUN apk add --no-cache \
 RUN rc-update add mariadb default
 
 RUN mariadb-install-db --user=mysql --datadir=/var/lib/mysql
+
+VOLUME /var/lib/mysql
+EXPOSE 3306
